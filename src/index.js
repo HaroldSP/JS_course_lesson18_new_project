@@ -4,8 +4,8 @@
 
 'strict';
 
-import oneModule from './modules/one.js';
+import timer from './modules/timer.js';
 import twoModule from './modules/two.js';
 
-oneModule();
+timer('24 February 2023');
 twoModule();
