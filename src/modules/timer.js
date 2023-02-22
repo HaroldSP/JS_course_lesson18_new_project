@@ -8,6 +8,7 @@ const timer = (deadline) => {
   const timerHours = document.getElementById('timer-hours');
   const timerMinutes = document.getElementById('timer-minutes');
   const timerSeconds = document.getElementById('timer-seconds');
+  let getTime;
 
   const getTimeRemaining = () => {
     let dateStop = new Date(deadline).getTime();
@@ -24,16 +25,14 @@ const timer = (deadline) => {
   }
 
   const updateClock = () => {
-    let getTime = getTimeRemaining();
+    getTime = getTimeRemaining();
     timerHours.textContent = getTime.hours;
     timerMinutes.textContent = getTime.minutes;
     timerSeconds.textContent = getTime.seconds;
-
-    if (getTime.timeRemain > 0) setTimeout(updateClock, 1000);
   }
   updateClock();
-  // countTimer('24 February 2023');
-  // setInterval(countTimer, 1000, '24 February 2023');
+
+  if (getTime.timeRemain > 0) setInterval(updateClock, 1000);
 }
 
 export default timer;
