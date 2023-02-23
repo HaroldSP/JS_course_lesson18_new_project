@@ -10,6 +10,13 @@ const modal = () => {
   const buttons = document.querySelectorAll('.popup-btn');
   const animationDuration = 500;
   let animationStart;
+  let isSmallScreen;
+
+  window.addEventListener('resize', () => {
+    const width = document.documentElement.clientWidth;
+    if (width < 768) isSmallScreen = true;
+    else isSmallScreen = false;
+  });
 
   function animateModal (timestamp) {
     if (!animationStart) animationStart = timestamp; // true только в первый разб чтобы записать начальное время
@@ -26,7 +33,7 @@ const modal = () => {
   function openModal () {
     animationStart = null;
     modal.style.display = 'block';
-    requestAnimationFrame(animateModal); // вместе с этим методом автоматически передается арг timestamp вызываемой функции.
+    if (!isSmallScreen) requestAnimationFrame(animateModal); // вместе с этим методом автоматически передается арг timestamp вызываемой функции.
     // console.log(!animationStart, 'first time condition'); // true только в этот раз
   }
 
