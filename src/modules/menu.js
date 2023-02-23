@@ -10,15 +10,53 @@ const menu = () => {
   const closeBtn = menu.querySelector('.close-btn');
   const menuItems = menu.querySelectorAll('ul > li > a');
 
-  const handleMenu = () => {
-    menu.classList.toggle('active-menu');
+  const animationDuration = 500;
+
+  let animationStart;
+  let targetId;
+  let target;
+  let targetPosition;
+
+  function animateScroll (timestamp) {
+    if (!animationStart) animationStart = timestamp;
+
+    const animationProgress = timestamp - animationStart;
+
+    const animationPercent = Math.min(1, animationProgress / animationDuration);
+
+    const scrollPosition = Math.floor(animationPercent * targetPosition);
+
+    window.scrollTo(0, scrollPosition);
+
+    if (animationPercent < 1) requestAnimationFrame(animateScroll);
   }
 
-  menuBtn.addEventListener('click', handleMenu);
+  const handleMenuItemToggle = () => menu.classList.toggle('active-menu');
 
-  closeBtn.addEventListener('click', handleMenu);
+  menuBtn.addEventListener('click', handleMenuItemToggle);
 
-  menuItems.forEach(menuItem => menuItem.addEventListener('click', handleMenu));
+  closeBtn.addEventListener('click', handleMenuItemToggle);
+
+  menuItems.forEach(menuItem => menuItem.addEventListener('click', handleMenuItemToggle));
+
+  const handleMenuItemScroll = (menuItem, event) => {
+    handleMenuItemToggle();
+    event.preventDefault();
+
+    animationStart = null;
+
+    targetId = menuItem.getAttribute('href').slice(1);
+
+    target = document.getElementById(targetId);
+
+    targetPosition = target.offsetTop + 50;
+
+    requestAnimationFrame(animateScroll);
+  }
+
+  menuItems.forEach(menuItem => {
+    menuItem.addEventListener('click', (event) => handleMenuItemScroll(menuItem, event))
+  });
 };
 
 export default menu;
