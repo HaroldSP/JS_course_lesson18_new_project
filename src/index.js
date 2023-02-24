@@ -9,9 +9,11 @@ import menu from './modules/menu.js';
 import modal from './modules/modal';
 import scroll from './modules/scroll';
 import formValidation from './modules/formValidation';
+import formValidationPlus from './modules/formValidationPlus';
 
 timer('24 February 2023');
 menu();
 modal();
 scroll();
-formValidation();
+// formValidation();
+formValidationPlus();
