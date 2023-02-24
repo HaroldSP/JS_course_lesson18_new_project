@@ -16,12 +16,113 @@ const formValidationPlus = () => {
   const calcInputs = calcDiv.querySelectorAll('input[type="text"]');
 
   calcInputs.forEach(calcInput => {
-    calcInput.addEventListener('input', (e) => {
-      e.target.value = e.target.value.replace(/\D+/g, '');
+    calcInput.addEventListener('blur', (e) => {
+      const inputValue = e.target.value;
+      const numericValue = inputValue.replace(/[\D]+/g, '');
+      const trimmedValue = numericValue.trim();
+      e.target.value = trimmedValue;
     })
   })
 
+  // //////////////////////////////////////////////////                    forms                             //////////////////////////////////////////////////////////////
+
+  // //////////////////////////////////////////////////                    new listners before submitting forms                             //////////////////////////////////////////////////////////////
+
   const forms = document.querySelectorAll('[name="user_form"]');
+
+  const textInputs = document.querySelectorAll('input[name="user_name"]');
+  const placeholderInputs = document.querySelectorAll('input[placeholder="Ваше сообщение"]');
+  const telInputs = document.querySelectorAll('input[type="tel"]');
+  const emailInputs = document.querySelectorAll('input[type="email"]');
+
+  // console.log(emailInputs)
+
+  // вообще есть случай, когда на конце есть пробел и дефис одновременно, а иногда появляется такая конструкция: " - ". Yо этого в задании не было, так что...
+  // можно дальше обрабатывать, как н-р в случае с tel.
+
+  textInputs.forEach(textInput => {
+    textInput.addEventListener('blur', () => {
+      let inputValue = textInput.value;
+      inputValue = inputValue.replace(/(^\s+|\s+$)|(^-+|-+$)/g, '');
+      inputValue = inputValue.replace(/[-]+/g, '-');
+      inputValue = inputValue.replace(/[\s]+/g, ' ');
+      inputValue = inputValue.replace(/[^а-яА-я\s-]/g, '');
+      // inputValue = inputValue.toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase());
+      inputValue = inputValue.split(' ');
+      inputValue = inputValue.map((word) => {
+        const firstLetter = word.charAt(0).toUpperCase();
+        const restOfLetters = word.slice(1).toLowerCase();
+
+        return firstLetter + restOfLetters;
+      });
+
+      inputValue = inputValue.join(' ');
+      textInput.value = inputValue;
+    });
+  });
+
+  placeholderInputs.forEach(placeholderInput => {
+    placeholderInput.addEventListener('blur', () => {
+      let inputValue = placeholderInput.value;
+      inputValue = inputValue.replace(/(^\s+|\s+$)|(^-+|-+$)/g, '');
+      inputValue = inputValue.replace(/[-]+/g, '-');
+      inputValue = inputValue.replace(/[\s]+/g, ' ');
+      inputValue = inputValue.replace(/[^а-яА-я\s-]/g, '');
+
+      placeholderInput.value = inputValue;
+    });
+  });
+
+  telInputs.forEach(telInput => {
+    telInput.addEventListener('blur', () => {
+      let inputValue = telInput.value;
+      inputValue = inputValue.replace(/(^\s+|\s+$)|(^-+|-+$)/g, '');
+      inputValue = inputValue.replace(/[-]+/g, '-');
+      inputValue = inputValue.replace(/[\s]+/g, '');
+      inputValue = inputValue.replace(/[^\d()+-]/g, '');
+      inputValue = inputValue.replace(/(^-+|-+$)/g, '');
+      inputValue = inputValue.replace(/[-]+/g, '-');
+
+      telInput.value = inputValue;
+    });
+  });
+
+  emailInputs.forEach(emailInput => {
+    emailInput.addEventListener('blur', () => {
+      let regexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/gi;
+      let inputValue = emailInput.value;
+      // console.log(inputValue, '1 - original - emailInput.value'); // --  test---777  --
+
+      inputValue = inputValue.replace(/(^\s+|\s+$)|(^-+|-+$)/g, '');
+      // console.log(inputValue, '2 - cutoff- and spaces - emailInput.value');
+
+      inputValue = inputValue.replace(/[-]+/g, '-');
+      // console.log(inputValue, '3 - to single - emailInput.value');
+
+      if (!regexp.test(inputValue)) {
+        alert('Введите корректный email !');
+        inputValue = '';
+        emailInput.value = inputValue;
+        // console.log(inputValue, '4 - after main check - emailInput.value');
+      } else {
+        inputValue = inputValue.replace(/(^-+|-+$)/g, '');
+        // console.log(inputValue, '5 - delete hyphens leftovers - emailInput.value');
+
+        inputValue = inputValue.replace(/[-]+/g, '-');
+        // console.log(inputValue, '6 - change multihyphens to single - emailInput.value');
+
+        emailInput.value = inputValue;
+        // console.log(emailInput.value, '7 -result - emailInput.value');
+      }
+    });
+  });
+
+  // //////////////////////////////////////////////////                   submit prepared forms                             //////////////////////////////////////////////////////////////
+
+  // повторная валидация необходима, так как первый клик вне инпута может быть сразу на кнопку отправить.
+  // можно сделть что-нибудь вроде при клике на кнопку отправить жди секунду и попробуй отправить еще раз,
+  // или сделать обязательные поля
+  // но есть готовый код проверки, так что...
 
   forms.forEach(form => {
     form.addEventListener('submit', (e) => {
@@ -33,8 +134,6 @@ const formValidationPlus = () => {
       const telInputs = form.querySelectorAll('input[type="tel"]');
       const emailInputs = form.querySelectorAll('input[type="email"]');
       const placeholderInputs = form.querySelectorAll('input[placeholder="Ваше сообщение"]');
-
-      // console.log(placeholderInputs)
 
       textInputs.forEach(textInput => {
         // const regeExpShort = /[^а-яА-я]/gi;
@@ -72,8 +171,6 @@ const formValidationPlus = () => {
       }
     })
   })
-
-  console.log(forms[1])
 };
 
 export default formValidationPlus;
