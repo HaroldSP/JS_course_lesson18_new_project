@@ -15,8 +15,20 @@
 // (Собака , Дефис , Подчеркивание , Точка , Восклицательный знак , Тильда , Звездочка , Одинарная кавычка)
 // В поля ввода type=tel позволить ввод только цифр, круглых скобок и дефис
 
-const menu = () => {
+const calc = () => {
+  const calcDiv = document.querySelector('.calc-block')
+  const calcInputs = calcDiv.querySelectorAll('input[type="text"]');
 
+  //   console.log(calcInputs)
+
+  const sayHi = () => alert('hi');
+  // calcInput.value = 'hi'
+
+  calcInputs.forEach(calcInput => {
+    calcInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D+/g, '');
+    })
+  })
 };
 
-export default menu;
+export default calc;
