@@ -8,10 +8,10 @@ import timer from './modules/timer.js';
 import menu from './modules/menu.js';
 import modal from './modules/modal';
 import scroll from './modules/scroll';
-import calc from './modules/calc';
+import formValidation from './modules/formValidation';
 
 timer('24 February 2023');
 menu();
 modal();
 scroll();
-calc();
+formValidation();
