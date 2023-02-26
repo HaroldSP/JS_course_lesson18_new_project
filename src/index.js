@@ -10,10 +10,12 @@ import modal from './modules/modal';
 import scroll from './modules/scroll';
 import formValidation from './modules/formValidation';
 import formValidationPlus from './modules/formValidationPlus';
+import formValidationDouble from './modules/formValidationDouble';
 
 timer('24 February 2023');
 menu();
 modal();
 scroll();
 // formValidation();
-formValidationPlus();
+// formValidationPlus();
+formValidationDouble();
