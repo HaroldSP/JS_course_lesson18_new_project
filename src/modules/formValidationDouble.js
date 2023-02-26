@@ -39,6 +39,11 @@ const formValidationDouble = () => {
       const trimmedValue = numericValue.trim();
       e.target.value = trimmedValue;
     })
+
+    // double check
+    calcInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D+/g, '');
+    })
   })
 
   // //////////////////////////////////////////////////                    forms                             //////////////////////////////////////////////////////////////
@@ -51,8 +56,6 @@ const formValidationDouble = () => {
   const placeholderInputs = document.querySelectorAll('input[placeholder="Ваше сообщение"]');
   const telInputs = document.querySelectorAll('input[type="tel"]');
   const emailInputs = document.querySelectorAll('input[type="email"]');
-
-  // console.log(emailInputs)
 
   // вообще есть случай, когда на конце есть пробел и дефис одновременно, а иногда появляется такая конструкция: " - ". Yо этого в задании не было, так что...
   // можно дальше обрабатывать, как н-р в случае с tel.
@@ -76,6 +79,12 @@ const formValidationDouble = () => {
       inputValue = inputValue.join(' ');
       textInput.value = inputValue;
     });
+
+    // double check
+    textInput.addEventListener('input', (e) => {
+      const regeExpNot = /[^а-яА-Я\s-]/gi;
+      e.target.value = e.target.value.replace(regeExpNot, '');
+    })
   });
 
   placeholderInputs.forEach(placeholderInput => {
@@ -88,6 +97,12 @@ const formValidationDouble = () => {
 
       placeholderInput.value = inputValue;
     });
+
+    // double check
+    placeholderInput.addEventListener('input', (e) => {
+      const regeExpNot = /[^а-яА-Я\s-]/gi;
+      e.target.value = e.target.value.replace(regeExpNot, '');
+    })
   });
 
   telInputs.forEach(telInput => {
@@ -102,6 +117,12 @@ const formValidationDouble = () => {
 
       telInput.value = inputValue;
     });
+
+    // double check
+    telInput.addEventListener('input', (e) => {
+      const regeExpNot = /[^\d()-]+/g;
+      e.target.value = e.target.value.replace(regeExpNot, '');
+    })
   });
 
   emailInputs.forEach(emailInput => {
@@ -132,6 +153,12 @@ const formValidationDouble = () => {
         // console.log(emailInput.value, '7 -result - emailInput.value');
       }
     });
+
+    // double check  @  -  _  . ! ~ * '
+    emailInput.addEventListener('input', (e) => {
+      const regeExpNot = /[^\w\d@_\-.!~*']+/gi;
+      e.target.value = e.target.value.replace(regeExpNot, '');
+    })
   });
 
   // //////////////////////////////////////////////////                   submit prepared forms                             //////////////////////////////////////////////////////////////
