@@ -12,12 +12,14 @@ import formValidation from './modules/formValidation';
 import formValidationPlus from './modules/formValidationPlus';
 import formValidationDouble from './modules/formValidationDouble';
 import tabs from './modules/tabs';
+import menuDelegation from './modules/menuDelegation';
 
 timer('24 February 2023');
-menu();
+// menu();
 modal();
 scroll();
 // formValidation();
 // formValidationPlus();
 formValidationDouble();
 tabs();
+menuDelegation();

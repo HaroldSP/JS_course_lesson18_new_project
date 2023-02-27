@@ -6,7 +6,6 @@
 
 const modal = () => {
   const modal = document.querySelector('.popup');
-  const closeBtn = modal.querySelector('.popup-close');
   const buttons = document.querySelectorAll('.popup-btn');
   const animationDuration = 500;
   let animationStart;
@@ -19,7 +18,7 @@ const modal = () => {
   });
 
   function animateModal (timestamp) {
-    if (!animationStart) animationStart = timestamp; // true только в первый разб чтобы записать начальное время
+    if (!animationStart) animationStart = timestamp; // true только в первый раз, чтобы записать начальное время
     // console.log(animationStart); // посмотреть время начала анимации
     const animationProgress = timestamp - animationStart;
     // console.log(timestamp, 'animationProgress:', animationProgress); // посмотреть прогресс
@@ -41,9 +40,9 @@ const modal = () => {
     btn.addEventListener('click', openModal);
   });
 
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
+  modal.addEventListener('click', (e) => {
+    if (!e.target.closest('.popup-content') || e.target.classList.contains('popup-close')) modal.style.display = 'none';
+  })
 };
 
 export default modal;
