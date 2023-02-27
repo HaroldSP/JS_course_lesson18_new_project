@@ -18,29 +18,24 @@
 */
 
 const menuDelegation = () => {
-  const menuBtn = document.getElementsByClassName('menu')[0];
-  // console.log(menuBtn)
+  const body = document.querySelector('body');
   const menu = document.querySelector('menu');
-  // console.log(menu)
-  const closeBtn = menu.querySelector('.close-btn');
-  const menuItems = menu.querySelectorAll('ul > li > a');
 
   const handleMenuItemToggle = () => menu.classList.toggle('active-menu');
 
-  menuBtn.addEventListener('click', handleMenuItemToggle);
-
-  closeBtn.addEventListener('click', handleMenuItemToggle);
-
-  menuItems.forEach(menuItem => {
-    menuItem.addEventListener('click', (event) => {
-      // handleMenuItemToggle(); // если нужно закрыть меню сразу после клика. ОСтавил, чтобы продемонстрировать относительное перемещение.
-      event.preventDefault();
-      console.log(event.target)
-      let targetId = menuItem.getAttribute('href').slice(1);
+  body.addEventListener('click', (e) => {
+    // console.log(e.target, 'куда кликнуто')
+    if (e.target.closest('.menu')) {
+      handleMenuItemToggle();
+    } else if ((menu.classList.contains('active-menu')) && e.target.matches('menu > ul > li > a')) {
+      handleMenuItemToggle(); // если нужно закрыть меню сразу после клика. Закомментировать, чтобы продемонстрировать относительное перемещение.
+      e.preventDefault();
+      let targetId = e.target.getAttribute('href').slice(1);
       let target = document.getElementById(targetId);
-
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    } else if ((menu.classList.contains('active-menu')) && !e.target.classList.contains('active-menu') && !e.target.matches('menu > ul > li')) {
+      handleMenuItemToggle();
+    }
   });
 };
 
