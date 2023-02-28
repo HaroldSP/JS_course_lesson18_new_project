@@ -13,6 +13,7 @@ import formValidationPlus from './modules/formValidationPlus';
 import formValidationDouble from './modules/formValidationDouble';
 import tabs from './modules/tabs';
 import menuDelegation from './modules/menuDelegation';
+import slider from './modules/slider';
 
 timer('24 February 2023');
 // menu();
@@ -23,3 +24,4 @@ scroll();
 formValidationDouble();
 tabs();
 menuDelegation();
+slider();
