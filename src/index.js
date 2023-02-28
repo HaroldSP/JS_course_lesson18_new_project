@@ -24,4 +24,4 @@ scroll();
 formValidationDouble();
 tabs();
 menuDelegation();
-slider();
+slider('.portfolio-content', '.portfolio-item', '.portfolio-dots');
