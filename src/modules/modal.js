@@ -4,11 +4,13 @@
 
 'strict';
 
+import { animate } from './helpers';
+
 const modal = () => {
   const modal = document.querySelector('.popup');
   const buttons = document.querySelectorAll('.popup-btn');
-  const animationDuration = 500;
-  let animationStart;
+  // const animationDuration = 500; //  // своя старая функция
+  // let animationStart; // своя старая функция
   let isSmallScreen;
 
   window.addEventListener('resize', () => {
@@ -17,22 +19,35 @@ const modal = () => {
     else isSmallScreen = false;
   });
 
-  function animateModal (timestamp) {
-    if (!animationStart) animationStart = timestamp; // true только в первый раз, чтобы записать начальное время
-    // console.log(animationStart); // посмотреть время начала анимации
-    const animationProgress = timestamp - animationStart;
-    // console.log(timestamp, 'animationProgress:', animationProgress); // посмотреть прогресс
-    const opacity = Math.min(1, animationProgress / animationDuration); // чтобы не перескочить единицу
-    modal.style.opacity = opacity;
-    if (animationProgress < animationDuration) {
-      requestAnimationFrame(animateModal);
-    }
-  }
+  // своя старая функция:
+  // function animateModal (timestamp) {
+  //   if (!animationStart) animationStart = timestamp; // true только в первый раз, чтобы записать начальное время
+  //   // console.log(animationStart); // посмотреть время начала анимации
+  //   const animationProgress = timestamp - animationStart;
+  //   // console.log(timestamp, 'animationProgress:', animationProgress); // посмотреть прогресс
+  //   const opacity = Math.min(1, animationProgress / animationDuration); // чтобы не перескочить единицу
+  //   modal.style.opacity = opacity;
+  //   if (animationProgress < animationDuration) {
+  //     requestAnimationFrame(animateModal);
+  //   }
+  // }
 
   function openModal () {
-    animationStart = null;
+    // animationStart = null; // своя старая функция
     modal.style.display = 'block';
-    if (!isSmallScreen) requestAnimationFrame(animateModal); // вместе с этим методом автоматически передается арг timestamp вызываемой функции.
+    // своя старая функция:
+    // if (!isSmallScreen) requestAnimationFrame(animateModal); // вместе с этим методом автоматически передается арг timestamp вызываемой функции.
+    if (!isSmallScreen) {
+      animate({
+        duration: 1000,
+        timing (timeFraction) {
+          return timeFraction;
+        },
+        draw (progress) {
+          modal.style.opacity = progress;
+        }
+      });
+    }
     // console.log(!animationStart, 'first time condition'); // true только в этот раз
   }
 

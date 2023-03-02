@@ -4,7 +4,10 @@
 
 'strict';
 
+import { animate } from './helpers';
+
 // Реализовать калькулятор на сайте
+// Uncomment to use animation without animate func from helpers and comment out animate func
 
 const calc = (price = 100) => {
   const calcBlock = document.querySelector('.calc-block');
@@ -14,9 +17,9 @@ const calc = (price = 100) => {
   const calcDay = document.querySelector('.calc-day');
   const total = document.getElementById('total');
 
-  let intervalId;
+  // let intervalId;
   let totalValue = 0;
-  let totalValueAnim = 0;
+  // let totalValueAnim = 0;
 
   const countCalc = () => {
     const calcTypeValue = +calcType.options[calcType.selectedIndex].value;
@@ -47,26 +50,35 @@ const calc = (price = 100) => {
     return totalValue;
   };
 
-  const animationFucn = () => {
-    if (totalValueAnim < totalValue) {
-      totalValueAnim++;
-      total.textContent = totalValueAnim;
-    } else {
-      clearInterval(intervalId);
-      totalValueAnim = 0;
-      // console.log('restart');
-    }
-  };
+  // const animationFucn = () => {
+  //   if (totalValueAnim < totalValue) {
+  //     totalValueAnim++;
+  //     total.textContent = totalValueAnim;
+  //   } else {
+  //     clearInterval(intervalId);
+  //     totalValueAnim = 0;
+  //     // console.log('restart');
+  //   }
+  // };
 
   calcBlock.addEventListener('input', (e) => {
     if (e.target === calcType || e.target === calcSquare ||
         e.target === calcCount || e.target === calcDay) {
-      clearInterval(intervalId);
-      totalValueAnim = 0;
-      total.textContent = totalValueAnim;
+      // clearInterval(intervalId);
+      // totalValueAnim = 0;
+      // total.textContent = totalValueAnim;
       totalValue = countCalc();
       console.log(totalValue)
-      intervalId = setInterval(animationFucn, 1);
+      // intervalId = setInterval(animationFucn, 1);
+      animate({
+        duration: 1000,
+        timing (timeFraction) {
+          return timeFraction;
+        },
+        draw (progress) {
+          total.textContent = Math.ceil(progress * totalValue);
+        }
+      });
     }
   });
 };
