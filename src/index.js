@@ -14,6 +14,7 @@ import formValidationDouble from './modules/formValidationDouble';
 import tabs from './modules/tabs';
 import menuDelegation from './modules/menuDelegation';
 import slider from './modules/slider';
+import calc from './modules/calc';
 
 timer('24 February 2023');
 // menu();
@@ -25,3 +26,4 @@ formValidationDouble();
 tabs();
 menuDelegation();
 slider('.portfolio-content', '.portfolio-item', '.portfolio-dots');
+calc();
