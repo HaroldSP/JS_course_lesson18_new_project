@@ -14,16 +14,19 @@ const calc = (price = 100) => {
   const calcDay = document.querySelector('.calc-day');
   const total = document.getElementById('total');
 
+  let intervalId;
+  let totalValue = 0;
+  let totalValueAnim = 0;
+
   const countCalc = () => {
     const calcTypeValue = +calcType.options[calcType.selectedIndex].value;
     const calcSquareValue = calcSquare.value;
 
-    let totalValue = 0;
+    // let totalValue = 0;
     let calcCountValue = 1;
     let calcDayValue = 1;
 
     if (calcCount.value > 1) {
-      // console.log('больше');
       calcCountValue += +calcCount.value / 10
     };
 
@@ -41,15 +44,31 @@ const calc = (price = 100) => {
       totalValue = 0;
     };
 
-    total.textContent = totalValue;
+    return totalValue;
+  };
+
+  const animationFucn = () => {
+    if (totalValueAnim < totalValue) {
+      totalValueAnim++;
+      total.textContent = totalValueAnim;
+    } else {
+      clearInterval(intervalId);
+      totalValueAnim = 0;
+      // console.log('restart');
+    }
   };
 
   calcBlock.addEventListener('input', (e) => {
     if (e.target === calcType || e.target === calcSquare ||
         e.target === calcCount || e.target === calcDay) {
-      countCalc();
+      clearInterval(intervalId);
+      totalValueAnim = 0;
+      total.textContent = totalValueAnim;
+      totalValue = countCalc();
+      console.log(totalValue)
+      intervalId = setInterval(animationFucn, 1);
     }
-  })
+  });
 };
 
 export default calc;
