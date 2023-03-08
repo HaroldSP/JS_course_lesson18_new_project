@@ -15,12 +15,16 @@
 В поля name="user_phone" разрешить ввод только цифр, знака “+”, круглых скобок и дефис
 В поля name="user_name" разрешить ввод только кириллицы и пробелов
 В поля name="user_message" разрешить только кириллицу, пробелы, цифры и знаки препинания.
+
+Усложненное:
+Вместо текстового оповещения statusBlock при отправки использовать прелоадер картинку или анимацию
 */
 
 const sendForm = ({ formId, someElem = [] }) => {
   const form = document.getElementById(formId);
   const statusBlock = document.createElement('div');
-  const loadText = 'Загрузка...';
+  //   const loadText = 'Загрузка...';
+  //   const loadText = <div class="spinner"></div>;
   const errorText = 'Ошибка...';
   const succesText = 'Спасибо, наш менеджер с вами свяжется!';
 
@@ -83,7 +87,7 @@ const sendForm = ({ formId, someElem = [] }) => {
     const formData = new FormData(form);
     const formBody = {};
 
-    statusBlock.textContent = loadText;
+    statusBlock.classList.add('spinner');
     form.append(statusBlock);
 
     formData.forEach((val, key) => {
@@ -102,6 +106,7 @@ const sendForm = ({ formId, someElem = [] }) => {
 
     if (validate(formElements)) {
       sendData(formBody).then(data => {
+        statusBlock.classList.remove('spinner');
         statusBlock.textContent = succesText;
 
         formElements.forEach(input => {
@@ -109,6 +114,7 @@ const sendForm = ({ formId, someElem = [] }) => {
         });
       })
         .catch(error => {
+          statusBlock.classList.remove('spinner');
           statusBlock.textContent = errorText;
           console.error(error);
         })
