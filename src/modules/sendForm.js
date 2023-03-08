@@ -7,8 +7,6 @@
 const sendForm = ({ formId, someElem = [] }) => {
   const form = document.getElementById(formId);
   const statusBlock = document.createElement('div');
-  //   const loadText = 'Загрузка...';
-  //   const loadText = <div class="spinner"></div>;
   const errorText = 'Ошибка...';
   const succesText = 'Спасибо, наш менеджер с вами свяжется!';
 
@@ -93,6 +91,10 @@ const sendForm = ({ formId, someElem = [] }) => {
         statusBlock.classList.remove('spinner');
         statusBlock.textContent = succesText;
 
+        setTimeout((timeout = 3) => {
+          statusBlock.textContent = '';
+        }, 3000);
+
         formElements.forEach(input => {
           input.value = ''
         });
@@ -103,7 +105,9 @@ const sendForm = ({ formId, someElem = [] }) => {
           console.error(error);
         })
     } else {
-      alert('Данные не валидны')
+      alert('Данные не валидны');
+      statusBlock.classList.remove('spinner');
+    //   form.reset(); // uncomment to clear form
     };
   };
 

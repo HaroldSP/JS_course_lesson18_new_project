@@ -18,6 +18,7 @@ const calc = (price = 100) => {
   const total = document.getElementById('total');
 
   // let intervalId;
+  let previousTotalValue = 0;
   let totalValue = 0;
   // let totalValueAnim = 0;
 
@@ -67,18 +68,29 @@ const calc = (price = 100) => {
       // clearInterval(intervalId);
       // totalValueAnim = 0;
       // total.textContent = totalValueAnim;
+
       totalValue = countCalc();
-      console.log(totalValue)
+
+      console.log(previousTotalValue, 'previousTotalValue')
+      console.log(totalValue, 'totalValue')
+
       // intervalId = setInterval(animationFucn, 1);
       animate({
-        duration: 1000,
+        duration: 5000,
         timing (timeFraction) {
           return timeFraction;
         },
         draw (progress) {
-          total.textContent = Math.ceil(progress * totalValue);
+          // console.log('draw section')
+          // console.log(previousTotalValue)
+          // console.log(totalValue)
+          total.textContent = previousTotalValue + Math.round(progress * (totalValue - previousTotalValue));
         }
       });
+
+      setTimeout(() => {
+        previousTotalValue = totalValue;
+      }, 5000);
     }
   });
 };
