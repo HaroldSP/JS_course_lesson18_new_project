@@ -15,6 +15,7 @@ import tabs from './modules/tabs';
 import menuDelegation from './modules/menuDelegation';
 import slider from './modules/slider';
 import calc from './modules/calc';
+import sendForm from './modules/sendForm';
 
 timer('24 February 2023');
 // menu();
@@ -22,8 +23,17 @@ modal();
 scroll();
 // formValidation();
 // formValidationPlus();
-formValidationDouble();
+// formValidationDouble();
 tabs();
 menuDelegation();
 slider('.portfolio-content', '.portfolio-item', '.portfolio-dots');
 calc();
+sendForm({
+  formId: 'form1',
+  someElem: [
+    {
+      type: 'block',
+      id: 'total'
+    }
+  ]
+});
