@@ -28,12 +28,15 @@ tabs();
 menuDelegation();
 slider('.portfolio-content', '.portfolio-item', '.portfolio-dots');
 calc();
-sendForm({
-  formId: 'form1',
-  someElem: [
-    {
-      type: 'block',
-      id: 'total'
-    }
-  ]
-});
+// sendForm({
+//   formId: 'form1',
+//   someElem: [
+//     {
+//       type: 'block',
+//       id: 'total'
+//     }
+//   ]
+// });
+sendForm({ formId: 'form1' });
+sendForm({ formId: 'form2' });
+sendForm({ formId: 'form3' });
