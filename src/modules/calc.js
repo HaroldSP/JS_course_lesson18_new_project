@@ -84,7 +84,7 @@ const calc = (price = 100) => {
           // console.log('draw section')
           // console.log(previousTotalValue)
           // console.log(totalValue)
-          total.textContent = previousTotalValue + Math.round(progress * (totalValue - previousTotalValue));
+          total.textContent = Math.round(previousTotalValue + Math.round(progress * (totalValue - previousTotalValue)));
         }
       });
 

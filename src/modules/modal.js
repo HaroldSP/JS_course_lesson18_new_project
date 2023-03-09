@@ -4,7 +4,7 @@
 
 'strict';
 
-import { animate } from './helpers';
+import { animate, enableBodyScroll, disableBodyScroll, getScrollbarWidth } from './helpers';
 
 const modal = () => {
   const modal = document.querySelector('.popup');
@@ -34,7 +34,9 @@ const modal = () => {
 
   function openModal () {
     // animationStart = null; // своя старая функция
+    // console.log(getScrollbarWidth());
     modal.style.display = 'block';
+    disableBodyScroll();
     // своя старая функция:
     // if (!isSmallScreen) requestAnimationFrame(animateModal); // вместе с этим методом автоматически передается арг timestamp вызываемой функции.
     if (!isSmallScreen) {
@@ -56,8 +58,11 @@ const modal = () => {
   });
 
   modal.addEventListener('click', (e) => {
-    if (!e.target.closest('.popup-content') || e.target.classList.contains('popup-close')) modal.style.display = 'none';
-  })
+    if (!e.target.closest('.popup-content') || e.target.classList.contains('popup-close')) {
+      modal.style.display = 'none';
+      enableBodyScroll();
+    }
+  });
 };
 
 export default modal;
